@@ -9,7 +9,9 @@ function App() {
     <BrowserRouter>
       <Routes>
           <Route path="/" element={<Front />} />
-          <Route path="/admin" element={<Back />} />
+          <Route path="/admin" element={<Back show="admin" />} />
+          <Route path="/admin/savivaldybes" element={<Back show="savivaldybes" />} />
+          <Route path="/admin/sritys" element={<Back show="sritys" />} />
           {/* <Route path="/login" element={<LoginPage />} />
           <Route path="/logout" element={<LogoutPage />} />
           <Route path="/admin" element={<RequireAuth role="admin"><Back show="clothes"/></RequireAuth>} /> */}
@@ -22,3 +24,6 @@ function App() {
 }
 
 export default App;
+
+// show="admin" -> show yra props'as su "admin" reikšme, kuri perduodama <Back /> komponente;
+// Back komponente paimamas props'as function Back({show});
