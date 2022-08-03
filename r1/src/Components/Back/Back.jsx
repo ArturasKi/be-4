@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 import BackContext from './BackContext';
 import Nav from './Nav';
 import SavivaldybesCrud from './Savivaldybes/Crud';
@@ -8,6 +9,8 @@ import SritysCrud from './Sritys/Crud';
 function Back({show}) {
 
     const [lastUpdate, setLastUpdate] = useState(Date.now());
+
+    const [messages, setMessages] = useState([]);
 
     const [savivaldybes, setSavivaldybes] = useState(null); 
     const [createSav, setCreateSav] = useState(null);
@@ -49,20 +52,22 @@ function Back({show}) {
       });
   }, [deleteSav]);
 
-  const showMessage = () => {
-
+  // showMessage objektas ateina { text: error.message, type: "danger" };
+  const showMessage = (m) => {
+    const id = uuidv4();  // random id;
+    m.id = id;  // message random id pridedamas į objektą;
+    setMessages(msg => [...msg, m]); // [...msg - messeges, prie kurių pridedamas naujas message m];
+    setTimeout(() => {
+      setMessages((mess) => mess.filter((ms) => ms.id !== id)); // filtruojam, kurie nelygus palieka, kurie lygus duoda false;
+    }, 5000);
   }
-  
-
-
-
-
 
     return (
         <BackContext.Provider value={{
             setCreateSav,
             savivaldybes,
-            setDeleteSav
+            setDeleteSav,
+            messages
         }}>
             {
                 show === 'admin' ? 

@@ -1,6 +1,12 @@
+import { useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
+import BackContext from "./BackContext";
+import Message from "./Message";
 
 function Nav() {
+
+    const { messages } = useContext(BackContext);
+
     return (
         <>
         <div className="container">
@@ -32,6 +38,7 @@ function Nav() {
                 </div>
             </div>
         </div>
+        <Message />
         </>
     )
 }
