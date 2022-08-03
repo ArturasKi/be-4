@@ -1,6 +1,6 @@
 import Nav from "../Nav";
-import CreateSritis from '../Sritys/Create';
-import ListSritys from '../Sritys/List';
+import CreateSritis from './Create';
+import ListSritys from './List';
 import EditSritys from './Edit';
 
 function Crud() {

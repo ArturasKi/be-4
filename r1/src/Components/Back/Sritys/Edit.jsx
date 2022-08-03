@@ -4,7 +4,7 @@ import BackContext from "../BackContext";
 
 function Edit() {
 
-  const { modalSritis, setEditSritis, setModalSritis, savivaldybes } = useContext(BackContext);
+  const { modalSritis, setEditSritis, setModalSritis, savivaldybes, setDeletePhoto } = useContext(BackContext);
 
   const [title, setTitle] = useState("");
   const [sav, setSav] = useState("0");
@@ -31,14 +31,21 @@ function Edit() {
 
   const handleEdit = () => {
     const data = { 
-        title, 
+        title: title, 
         id: modalSritis.id,
         sav: parseInt(sav),
         photo: photoPrint
     }; // edit'e ID nesiredaguoja, paimamas toks koks buvo gautas kuriant;
+    console.log(data);
     setEditSritis(data);
     setModalSritis(null); // uždaromas modal langas;
   };
+
+  const handleDeletePhoto = () => {
+    setDeletePhoto({id: modalSritis.id});
+    setModalSritis(p => ({...p, photo: null}));
+    setPhotoPrint(null);
+}
 
   if (modalSritis === null) {
     return null;
@@ -92,8 +99,9 @@ function Edit() {
               }
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-outline-secondary" onClick={() => setModalSritis(null)}>Uždaryti</button>
             <button type="button" className="btn btn-outline-primary" onClick={handleEdit}>Išsaugoti</button>
+            <button type="button" className="btn btn-outline-danger" onClick={handleDeletePhoto}>Remove photo</button>
+            <button type="button" className="btn btn-outline-secondary" onClick={() => setModalSritis(null)}>Uždaryti</button>
           </div>
         </div>
       </div>

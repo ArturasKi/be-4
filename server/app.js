@@ -106,10 +106,10 @@ app.delete("/admin/sritys/:id", (req, res) => {
 app.put("/admin/savivaldybes/:id", (req, res) => {
   const sql = `
   UPDATE savivaldybes
-  SET title = ?, sav_id = ?, photo = ?
+  SET title = ?
   WHERE id = ?
   `;
-  con.query(sql, [req.body.title, req.body.sav, req.body.photo, req.params.id], (err, result) => {
+  con.query(sql, [req.body.title, req.params.id], (err, result) => {
       if (err) throw err;
       res.send({ result, msg: { text: 'Savivaldybė redaguota', type: 'success' } });
   });
@@ -119,10 +119,10 @@ app.put("/admin/savivaldybes/:id", (req, res) => {
 app.put("/admin/sritys/:id", (req, res) => {
   const sql = `
   UPDATE sritys
-  SET title = ?, 
+  SET title = ?, sav_id = ?, photo = ?
   WHERE id = ?
   `;
-  con.query(sql, [req.body.title, req.params.id], (err, result) => {
+  con.query(sql, [req.body.title, req.body.sav, req.body.photo, req.params.id], (err, result) => {
       if (err) throw err;
       res.send({ result, msg: { text: 'Savivaldybė redaguota', type: 'success' } });
   });

@@ -23,6 +23,7 @@ function Back({show}) {
     const [deleteSritis, setDeleteSritis] = useState(null);
     const [editSritis, setEditSritis] = useState(null);
     const [modalSritis, setModalSritis] = useState(null);
+    const [deletePhoto, setDeletePhoto] = useState(null);
 
   // READ SAV => useEffect viduje paduodama funkcija, kuri kreipiasi (GET) į serverį ir paima informaciją iš atitinkamo URL;
   useEffect(() => {
@@ -95,6 +96,20 @@ function Back({show}) {
       });
   }, [deleteSritis]);
 
+  // DELETE PHOTO
+  useEffect(() => {
+    if (null === deletePhoto) return;
+    axios
+      .delete("http://localhost:3003/admin/photos/" + deletePhoto.id)
+      .then((res) => {
+        showMessage(res.data.msg);
+        setLastUpdate(Date.now()); // irasymas, update;
+      })
+      .catch((error) => {
+        showMessage({ text: error.message, type: "danger" });
+      });
+  }, [deletePhoto]);
+
      // EDIT SAV => useEffect viduje paduodama funkcija, kuri kreipiasi (PUT) į serverį paduodama elemento id, kurį norime redaguoti;
      useEffect(() => {
       if (null === editSav) return; // pasikeitus deleteSav, jeigu jis nėra null;
@@ -148,7 +163,8 @@ function Back({show}) {
             setDeleteSritis,
             setEditSritis,
             modalSritis,
-            setModalSritis
+            setModalSritis,
+            setDeletePhoto
         }}>
             {
                 show === 'admin' ? 
