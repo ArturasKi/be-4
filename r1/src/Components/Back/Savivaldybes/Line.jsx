@@ -3,10 +3,12 @@ import BackContext from "../BackContext";
 
 function Line({line}) {
 
-    const { a } = useContext(BackContext);
+    const { setDeleteSav } = useContext(BackContext);
 
+    // kai paspaudžiamas mygtukas, pasileidžia f-ja handleDelete, kuri paset'iną 'line' (id, title);
+    // po paspaudimo setDeleteSav pakeis deleteSav state'ą, kurio pasikeitimą stebės useEffect;
     const handleDelete = () => {
-        // setDeleteCat(line);
+        setDeleteSav(line);
     }
     
     const handleEdit = () => {

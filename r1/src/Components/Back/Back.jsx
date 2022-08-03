@@ -11,6 +11,7 @@ function Back({show}) {
 
     const [savivaldybes, setSavivaldybes] = useState(null); 
     const [createSav, setCreateSav] = useState(null);
+    const [deleteSav, setDeleteSav] = useState(null);
 
   // READ SAV => useEffect viduje paduodama funkcija, kuri kreipiasi (GET) į serverį ir paima informaciją iš atitinkamo URL;
   useEffect(() => {
@@ -34,6 +35,20 @@ function Back({show}) {
       });
   }, [createSav]);
 
+   // DELETE SAV => useEffect viduje paduodama funkcija, kuri kreipiasi (DELETE) į serverį paduodama elemento id, kurį nori ištrinti;
+  useEffect(() => {
+    if (null === deleteSav) return; // pasikeitus deleteSav, jeigu jis nėra null;
+    axios
+      .delete("http://localhost:3003/admin/savivaldybes/" + deleteSav.id) // siunčiama užklausa su id;
+      .then((res) => {
+        showMessage(res.data.msg);
+        setLastUpdate(Date.now()); // irasymas, update;
+      })
+      .catch((error) => {
+        showMessage({ text: error.message, type: "danger" }); // jei ateina klaida, rodoma danger message;
+      });
+  }, [deleteSav]);
+
   const showMessage = () => {
 
   }
@@ -46,7 +61,8 @@ function Back({show}) {
     return (
         <BackContext.Provider value={{
             setCreateSav,
-            savivaldybes
+            savivaldybes,
+            setDeleteSav
         }}>
             {
                 show === 'admin' ? 

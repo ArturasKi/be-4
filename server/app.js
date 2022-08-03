@@ -22,7 +22,7 @@ const con = mysql.createConnection({
   database: "viesasis_sektorius",
 });
 
-//BACK CREATE SAV
+//BACK CREATE SAVIVALDYBĖ
 app.post("/admin/savivaldybes", (req, res) => {
   const sql = `
   INSERT INTO savivaldybes
@@ -39,7 +39,7 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
-//BACK SAV
+//BACK SAVIVALDYBĖ
 app.get("/admin/savivaldybes", (req, res) => {
   const sql = `
 SELECT *
@@ -51,3 +51,17 @@ ORDER BY title
       res.send(result);
   });
 });
+
+//BACK DELETE SAVIVALDYBĖ
+app.delete("/admin/savivaldybes/:id", (req, res) => {
+  const sql = `
+  DELETE FROM savivaldybes
+  WHERE id = ?
+  `;
+  con.query(sql, [req.params.id], (err, result) => {
+      if (err) throw err;
+      res.send({ result, msg: { text: 'Savivaldybė buvo ištrinta', type: 'danger' } });
+  });
+});
+
+// con - connection objektas;
