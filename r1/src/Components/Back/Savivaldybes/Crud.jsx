@@ -1,7 +1,7 @@
 import Nav from "../Nav";
 import CreateSav from "./Create";
-import Edit from "./Edit";
-import List from "./List";
+import EditSav from "./Edit";
+import ListSav from "./List";
 
 function Crud() {
     return (
@@ -13,11 +13,11 @@ function Crud() {
                         <CreateSav />
                     </div>
                     <div className="col-8">
-                        <List />
+                        <ListSav />
                     </div>
                 </div>
             </div>
-            <Edit />
+            <EditSav />
         </>
     )
 }

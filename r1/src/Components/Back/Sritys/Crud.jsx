@@ -1,6 +1,7 @@
 import Nav from "../Nav";
 import CreateSritis from '../Sritys/Create';
 import ListSritys from '../Sritys/List';
+import EditSritys from './Edit';
 
 function Crud() {
     return (
@@ -16,6 +17,7 @@ function Crud() {
                     </div>
                 </div>
             </div>
+            <EditSritys />
         </>
     )
 }
