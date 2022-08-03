@@ -163,7 +163,7 @@ app.post("/komentarai", (req, res) => {
   (com, sav_id, sr_id)
   VALUES (?, ?, ?)
   `;
-  con.query(sql, [req.body.com, req.body.sav_id, req.body.sr], (err, result) => {
+  con.query(sql, [req.body.com, req.body.sav_id, req.body.sr_id], (err, result) => {
       if (err) throw err;
       res.send({ result });
   });

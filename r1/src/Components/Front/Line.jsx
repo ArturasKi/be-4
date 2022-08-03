@@ -12,9 +12,10 @@ function Line({line}) {
     const [com, setCom] = useState('');
 
     const addComment = () => {
-        console.log(line.id);
-        // setAddCom({sav_id: line.id, com});
-        // setCom('');
+        console.log(sav);
+        // console.log(sav);
+        setAddCom({sav_id: sav, sr_id: sritis, com});
+        setCom('');
     }
 
     return (
