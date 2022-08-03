@@ -1,5 +1,6 @@
 import Nav from "../Nav";
 import CreateSav from "./Create";
+import Edit from "./Edit";
 import List from "./List";
 
 function Crud() {
@@ -16,6 +17,7 @@ function Crud() {
                     </div>
                 </div>
             </div>
+            <Edit />
         </>
     )
 }

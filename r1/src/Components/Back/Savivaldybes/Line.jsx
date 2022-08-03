@@ -3,7 +3,7 @@ import BackContext from "../BackContext";
 
 function Line({line}) {
 
-    const { setDeleteSav } = useContext(BackContext);
+    const { setDeleteSav, setModalSav } = useContext(BackContext);
 
     // kai paspaudžiamas mygtukas, pasileidžia f-ja handleDelete, kuri paset'iną 'line' (id, title);
     // po paspaudimo setDeleteSav pakeis deleteSav state'ą, kurio pasikeitimą stebės useEffect;
@@ -12,7 +12,7 @@ function Line({line}) {
     }
     
     const handleEdit = () => {
-        // setModalCat(line);
+        setModalSav(line);
     }
 
     return (

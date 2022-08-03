@@ -15,6 +15,8 @@ function Back({show}) {
     const [savivaldybes, setSavivaldybes] = useState(null); 
     const [createSav, setCreateSav] = useState(null);
     const [deleteSav, setDeleteSav] = useState(null);
+    const [editSav, setEditSav] = useState(null);
+    const [modalSav, setModalSav] = useState(null);
 
   // READ SAV => useEffect viduje paduodama funkcija, kuri kreipiasi (GET) į serverį ir paima informaciją iš atitinkamo URL;
   useEffect(() => {
@@ -52,14 +54,28 @@ function Back({show}) {
       });
   }, [deleteSav]);
 
+     // EDIT SAV => useEffect viduje paduodama funkcija, kuri kreipiasi (PUT) į serverį paduodama elemento id, kurį norime redaguoti;
+     useEffect(() => {
+      if (null === editSav) return; // pasikeitus deleteSav, jeigu jis nėra null;
+      axios
+        .put("http://localhost:3003/admin/savivaldybes/" + editSav.id, editSav) // siunčiama užklausa su editSav.id (kokiam id skirta nurodoma URL) + editSav papildomai, nes title perdavinėsim per objektą;
+        .then((res) => {
+          showMessage(res.data.msg);
+          setLastUpdate(Date.now()); // irasymas, update;
+        })
+        .catch((error) => {
+          showMessage({ text: error.message, type: "danger" }); // jei ateina klaida, rodoma danger message;
+        });
+    }, [editSav]);
+
   // showMessage objektas ateina { text: error.message, type: "danger" };
   const showMessage = (m) => {
     const id = uuidv4();  // random id;
-    m.id = id;  // message random id pridedamas į objektą;
+    m.id = id;  // random id pridedamas į objektą kaip id;
     setMessages(msg => [...msg, m]); // [...msg - messeges, prie kurių pridedamas naujas message m];
     setTimeout(() => {
       setMessages((mess) => mess.filter((ms) => ms.id !== id)); // filtruojam, kurie nelygus palieka, kurie lygus duoda false;
-    }, 5000);
+    }, 5000); // po 5s message dingsta;
   }
 
     return (
@@ -67,7 +83,10 @@ function Back({show}) {
             setCreateSav,
             savivaldybes,
             setDeleteSav,
-            messages
+            messages,
+            setEditSav,
+            modalSav,
+            setModalSav
         }}>
             {
                 show === 'admin' ? 

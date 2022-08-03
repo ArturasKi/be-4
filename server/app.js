@@ -65,3 +65,16 @@ app.delete("/admin/savivaldybes/:id", (req, res) => {
 });
 
 // con - connection objektas;
+
+//BACK EDIT SAVIVALDYBĖ
+app.put("/admin/savivaldybes/:id", (req, res) => {
+  const sql = `
+  UPDATE savivaldybes
+  SET title = ?
+  WHERE id = ?
+  `;
+  con.query(sql, [req.body.title, req.params.id], (err, result) => {
+      if (err) throw err;
+      res.send({ result, msg: { text: 'Savivaldybė redaguota', type: 'success' } });
+  });
+});
