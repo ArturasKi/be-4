@@ -4,7 +4,7 @@ import getBase64 from '../../../Functions/getBase64.js';
 import { useRef } from "react";
 
 function Create() {
-  const { savivaldybes, setCreateSritis } = useContext(BackContext);
+  const { savivaldybes, setCreateSritis, showMessage } = useContext(BackContext);
 
   const [title, setTitle] = useState("");
   const [sav, setSav] = useState('0');
@@ -20,9 +20,13 @@ function Create() {
   }
 
   const handleCreate = () => {
+      if (sav === "0") {
+        showMessage({ text: "Please select category!", type: "danger" });
+        return;
+    }
     const data = { 
       title,
-      sav: parseInt(sav),
+      sav: sav,
       photo: photoPrint
     };
     setCreateSritis(data);

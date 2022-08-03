@@ -10,7 +10,8 @@ body {
         width: 100%;
         .content {
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            align-items: flex-start;
             justify-content: flex-start;
             .box {
                 width: 15px;
@@ -89,9 +90,9 @@ body {
         flex-direction: column;
         width: 100%;
         .content {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
+            // display: flex;
+            // align-items: center;
+            // justify-content: flex-start;
         }
         .form-group {
             width: 100%;
@@ -109,11 +110,6 @@ body {
                 color: pink;
             }
         }
-        // .buttons {
-        //     display: flex;
-        //     align-items: center;
-        //     justify-content: flex-end;
-        // }
         b {
             margin-right: 7px;
         }
@@ -142,7 +138,7 @@ body {
     flex-direction: column;
     align-items: flex-end;
     z-index: 3;
-    opacity: 0.7;
+    opacity: 0.9;
     .alert-danger {
         background-color: #f8d7dac2;
     }
@@ -169,7 +165,7 @@ nav.nav {
     // align-items: center;
     // justify-content: center;
     margin-bottom: 20px;
-    max-width: 300px;
+    max-width: 150px;
     img {
         width: 100%;
         height: auto;

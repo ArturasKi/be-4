@@ -1,5 +1,6 @@
 import Nav from "../Nav";
 import CreateSritis from '../Sritys/Create';
+import ListSritys from '../Sritys/List';
 
 function Crud() {
     return (
@@ -11,7 +12,7 @@ function Crud() {
                         <CreateSritis />
                     </div>
                     <div className="col-8">
-                        
+                        <ListSritys />
                     </div>
                 </div>
             </div>

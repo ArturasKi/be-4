@@ -48,11 +48,26 @@ app.post("/admin/sritys", (req, res) => {
   });
 });
 
-//BACK SAVIVALDYBĖ
+//BACK READ SAVIVALDYBĖS
 app.get("/admin/savivaldybes", (req, res) => {
   const sql = `
 SELECT *
 FROM savivaldybes
+ORDER BY title
+`;
+  con.query(sql, (err, result) => {
+      if (err) throw err;
+      res.send(result);
+  });
+});
+
+//BACK READ SRITYS
+app.get("/admin/sritys", (req, res) => {
+  const sql = `
+SELECT sr.id, sr.title, sav.title AS sav, photo
+FROM sritys AS sr
+LEFT JOIN savivaldybes AS sav
+ON sav.id = sr.sav_id
 ORDER BY title
 `;
   con.query(sql, (err, result) => {

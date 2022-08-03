@@ -5,7 +5,7 @@ import BackContext from "../BackContext";
 
 function List() {
 
-    const {savivaldybes} = useContext(BackContext);
+    const {sritys} = useContext(BackContext);
 
     return (
         <div className="card mt-4">
@@ -15,7 +15,7 @@ function List() {
             <div className="card-body">
                 <ul className="list-group">
                     {
-                    savivaldybes ? savivaldybes.map(sav => <Line key={sav.id} line={sav}></Line>) : null
+                    sritys ? sritys.map(sritis => <Line key={sritis.id} line={sritis}></Line>) : null
                     }
                 </ul>
             </div>

@@ -28,6 +28,13 @@ function Back({show}) {
       .then((res) => setSavivaldybes(res.data));
   }, [lastUpdate]);
 
+  // READ SRITYS => useEffect viduje paduodama funkcija, kuri kreipiasi (GET) į serverį ir paima informaciją iš atitinkamo URL;
+  useEffect(() => {
+    axios
+      .get("http://localhost:3003/admin/sritys")
+      .then((res) => setSritys(res.data));
+  }, [lastUpdate]);
+
     // CREATE SAV => useEffect viduje paduodama funkcija, kuri kreipiasi (POST) į serverį ir siunčia į jį createSav informaciją;
     // URL - adresas kurio pagalba naršyklė gali pasiekti resursą internete. 
   useEffect(() => {
@@ -104,7 +111,9 @@ function Back({show}) {
             setEditSav,
             modalSav,
             setModalSav,
-            setCreateSritis
+            sritys,
+            setCreateSritis,
+            showMessage
         }}>
             {
                 show === 'admin' ? 
