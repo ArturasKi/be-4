@@ -20,6 +20,9 @@ function Back({show}) {
 
     const [sritys, setSritys] = useState(null);
     const [createSritis, setCreateSritis] = useState(null);
+    const [deleteSritis, setDeleteSritis] = useState(null);
+    const [editSritis, setEditSritis] = useState(null);
+    const [modalSritis, setModalSritis] = useState(null);
 
   // READ SAV => useEffect viduje paduodama funkcija, kuri kreipiasi (GET) į serverį ir paima informaciją iš atitinkamo URL;
   useEffect(() => {
@@ -78,6 +81,20 @@ function Back({show}) {
       });
   }, [deleteSav]);
 
+   // DELETE SRITIS => useEffect viduje paduodama funkcija, kuri kreipiasi (DELETE) į serverį paduodama elemento id, kurį nori ištrinti;
+  useEffect(() => {
+    if (null === deleteSritis) return; // pasikeitus deleteSav, jeigu jis nėra null;
+    axios
+      .delete("http://localhost:3003/admin/sritys/" + deleteSritis.id) // siunčiama užklausa su id;
+      .then((res) => {
+        showMessage(res.data.msg);
+        setLastUpdate(Date.now()); // irasymas, update;
+      })
+      .catch((error) => {
+        showMessage({ text: error.message, type: "danger" }); // jei ateina klaida, rodoma danger message;
+      });
+  }, [deleteSritis]);
+
      // EDIT SAV => useEffect viduje paduodama funkcija, kuri kreipiasi (PUT) į serverį paduodama elemento id, kurį norime redaguoti;
      useEffect(() => {
       if (null === editSav) return; // pasikeitus deleteSav, jeigu jis nėra null;
@@ -91,6 +108,20 @@ function Back({show}) {
           showMessage({ text: error.message, type: "danger" }); // jei ateina klaida, rodoma danger message;
         });
     }, [editSav]);
+
+     // EDIT SRITIS => useEffect viduje paduodama funkcija, kuri kreipiasi (PUT) į serverį paduodama elemento id, kurį norime redaguoti;
+     useEffect(() => {
+      if (null === editSritis) return; // pasikeitus deleteSav, jeigu jis nėra null;
+      axios
+        .put("http://localhost:3003/admin/sritys/" + editSritis.id, editSritis) // siunčiama užklausa su editSav.id (kokiam id skirta nurodoma URL) + editSav papildomai, nes title perdavinėsim per objektą;
+        .then((res) => {
+          showMessage(res.data.msg);
+          setLastUpdate(Date.now()); // irasymas, update;
+        })
+        .catch((error) => {
+          showMessage({ text: error.message, type: "danger" }); // jei ateina klaida, rodoma danger message;
+        });
+    }, [editSritis]);
 
   // showMessage objektas ateina { text: error.message, type: "danger" };
   const showMessage = (m) => {
@@ -113,7 +144,11 @@ function Back({show}) {
             setModalSav,
             sritys,
             setCreateSritis,
-            showMessage
+            showMessage,
+            setDeleteSritis,
+            setEditSritis,
+            modalSritis,
+            setModalSritis
         }}>
             {
                 show === 'admin' ? 

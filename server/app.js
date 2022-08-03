@@ -88,6 +88,18 @@ app.delete("/admin/savivaldybes/:id", (req, res) => {
   });
 });
 
+//BACK DELETE SAVIVALDYBĖ
+app.delete("/admin/sritys/:id", (req, res) => {
+  const sql = `
+  DELETE FROM sritys
+  WHERE id = ?
+  `;
+  con.query(sql, [req.params.id], (err, result) => {
+      if (err) throw err;
+      res.send({ result, msg: { text: 'Savivaldybė buvo ištrinta', type: 'danger' } });
+  });
+});
+
 // con - connection objektas;
 
 //BACK EDIT SAVIVALDYBĖ
