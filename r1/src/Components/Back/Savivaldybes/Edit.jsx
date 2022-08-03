@@ -1,11 +1,14 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import BackContext from "../BackContext";
+import getBase64 from "../../../Functions/getBase64";
 
 function Edit() {
 
-  const { modalSav, setEditSav, setModalSav } = useContext(BackContext);
+  const { modalSav, setEditSav, setModalSav, setDeletePhoto } = useContext(BackContext);
 
   const [title, setTitle] = useState("");
+  const [photoPrint, setPhotoPrint] = useState(null);
+  const fileInput = useRef();
 
   // paspaudus edit, modal data is null gauna objekta, pasikeicia modal data ir persirenderina viskas;
   useEffect(() => {
@@ -13,12 +16,22 @@ function Edit() {
       return;
     }
     setTitle(modalSav.title);
+    setPhotoPrint(modalSav.photo);
   }, [modalSav]);
+
+  const doPhoto = () => {
+    getBase64(fileInput.current.files[0])
+    .then(photo => setPhotoPrint(photo))
+    .catch(_ => {
+      // tylim
+    });
+  }
 
   const handleEdit = () => {
     const data = { 
         title, 
-        id: modalSav.id 
+        id: modalSav.id,
+        photo: photoPrint 
     }; // edit'e ID nesiredaguoja, paimamas toks koks buvo gautas kuriant;
     setEditSav(data);
     setModalSav(null); // uždaromas modal langas;
@@ -55,6 +68,14 @@ function Edit() {
                 Įveskite naują pavadinimą.
               </small>
             </div>
+            <div className="form-group">
+              <label>Photo</label>
+              <input ref={fileInput} type="file" className="form-control" onChange={doPhoto}/>
+              <small className="form-text text-muted">Upload photo</small>
+            </div>
+              {
+                photoPrint ? <div className="photo-bin"><img src={photoPrint} alt='nice'/></div> : null
+              }
           </div>
           <div className="modal-footer">
             <button type="button" className="btn btn-outline-secondary" onClick={() => setModalSav(null)}>Uždaryti</button>

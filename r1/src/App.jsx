@@ -8,7 +8,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-          <Route path="/" element={<Front />} />
+          <Route path="/" element={<Front show="front"/>} />
+          <Route path="/pateikti" element={<Front show="pateikti"/>} />
+          <Route path="/pasiulymai" element={<Front show="pasiulymai"/>} />
           <Route path="/admin" element={<Back show="admin" />} />
           <Route path="/admin/savivaldybes" element={<Back show="savivaldybes" />} />
           <Route path="/admin/sritys" element={<Back show="sritys" />} />

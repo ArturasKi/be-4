@@ -10,7 +10,7 @@ function List() {
     return (
         <div className="card mt-4">
             <div className="card-header">
-              <h2>Sričių sarašas</h2>
+              <h2>Savivaldybių sarašas</h2>
             </div>
             <div className="card-body">
                 <ul className="list-group">

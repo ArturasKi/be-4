@@ -20,6 +20,9 @@ function Line({line}) {
             <div className="item">
                 <div className="content">
                     <b>{line.title}</b>
+                    {
+                        line.photo ? <div className="photo-bin"><img src={line.photo} alt='nice'/></div> : null
+                    }
                 </div>
                 <div className="buttons">
                     <button type="button" className="btn btn-outline-success ml-2" onClick={handleEdit}>Edit</button>

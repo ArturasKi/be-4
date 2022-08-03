@@ -1,15 +1,27 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 import BackContext from "../BackContext";
+import getBase64 from '../../../Functions/getBase64.js';
 
 function Create() {
-  const { setCreateSav } = useContext(BackContext);
+  const { setCreateSav, showMessage } = useContext(BackContext);
 
   const [title, setTitle] = useState("");
+  const [photoPrint, setPhotoPrint] = useState(null);
+  const fileInput = useRef();
+
+  const doPhoto = () => {
+    getBase64(fileInput.current.files[0])
+    .then(photo => setPhotoPrint(photo))
+    .catch(_ => {
+      // tylim
+    });
+  }
 
   const handleCreate = () => {
-    const data = { title };
+    const data = { title, photo: photoPrint };
     setCreateSav(data);
     setTitle('');
+    setPhotoPrint(null);
   };
 
   return (
@@ -26,8 +38,16 @@ function Create() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           ></input>
-          <small className="form-text text-muted">Įvesti pavadinimą.</small>
+          <small className="form-text text-muted">Įvesti pavadinimą</small>
         </div>
+        <div className="form-group">
+          <label>Herbo paveiksliukas</label>
+          <input ref={fileInput} type="file" className="form-control" onChange={doPhoto}/>
+          <small className="form-text text-muted">Įkelti nuotrauką</small>
+        </div>
+          {
+            photoPrint ? <div className="photo-bin"><img src={photoPrint} alt='nice'/></div> : null
+          }
         <button
           type="button"
           className="btn btn-outline-primary with-loader"

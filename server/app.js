@@ -26,10 +26,10 @@ const con = mysql.createConnection({
 app.post("/admin/savivaldybes", (req, res) => {
   const sql = `
   INSERT INTO savivaldybes
-  (title)
-  VALUES (?)
+  (title, photo)
+  VALUES (?, ?)
   `;
-  con.query(sql, [req.body.title], (err, result) => {
+  con.query(sql, [req.body.title, req.body.photo], (err, result) => {
       if (err) throw err;
       res.send({ result, msg: { text: "Pridėta nauja savivaldybė!", type: "success" } });
   });
@@ -39,10 +39,10 @@ app.post("/admin/savivaldybes", (req, res) => {
 app.post("/admin/sritys", (req, res) => {
   const sql = `
   INSERT INTO sritys
-  (title, photo, sav_id)
-  VALUES (?, ?, ?)
+  (title)
+  VALUES (?)
   `;
-  con.query(sql, [req.body.title, req.body.photo, req.body.sav], (err, result) => {
+  con.query(sql, [req.body.title], (err, result) => {
       if (err) throw err;
       res.send({ result, msg: { text: "Pridėta nauja sritis!", type: "success" } });
   });
@@ -64,10 +64,8 @@ ORDER BY title
 //BACK READ SRITYS
 app.get("/admin/sritys", (req, res) => {
   const sql = `
-SELECT sr.id, sr.title, sav.title AS sav, photo
-FROM sritys AS sr
-LEFT JOIN savivaldybes AS sav
-ON sav.id = sr.sav_id
+SELECT *
+FROM sritys
 ORDER BY title
 `;
   con.query(sql, (err, result) => {
@@ -106,10 +104,10 @@ app.delete("/admin/sritys/:id", (req, res) => {
 app.put("/admin/savivaldybes/:id", (req, res) => {
   const sql = `
   UPDATE savivaldybes
-  SET title = ?
+  SET title = ?, photo = ?
   WHERE id = ?
   `;
-  con.query(sql, [req.body.title, req.params.id], (err, result) => {
+  con.query(sql, [req.body.title, req.body.photo, req.params.id], (err, result) => {
       if (err) throw err;
       res.send({ result, msg: { text: 'Savivaldybė redaguota', type: 'success' } });
   });
@@ -119,12 +117,38 @@ app.put("/admin/savivaldybes/:id", (req, res) => {
 app.put("/admin/sritys/:id", (req, res) => {
   const sql = `
   UPDATE sritys
-  SET title = ?, sav_id = ?, photo = ?
+  SET title = ?
   WHERE id = ?
   `;
-  con.query(sql, [req.body.title, req.body.sav, req.body.photo, req.params.id], (err, result) => {
+  con.query(sql, [req.body.title, req.params.id], (err, result) => {
       if (err) throw err;
       res.send({ result, msg: { text: 'Savivaldybė redaguota', type: 'success' } });
+  });
+});
+
+//FRONT READ SAVIVALDYBĖS
+app.get("/savivaldybes", (req, res) => {
+  const sql = `
+SELECT *
+FROM savivaldybes
+ORDER BY title
+`;
+  con.query(sql, (err, result) => {
+      if (err) throw err;
+      res.send(result);
+  });
+});
+
+//FRONT READ SRITYS
+app.get("/sritys", (req, res) => {
+  const sql = `
+SELECT *
+FROM sritys
+ORDER BY title
+`;
+  con.query(sql, (err, result) => {
+      if (err) throw err;
+      res.send(result);
   });
 });
 
