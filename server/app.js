@@ -35,9 +35,18 @@ app.post("/admin/savivaldybes", (req, res) => {
   });
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+//BACK CREATE SRITIS
+app.post("/admin/sritys", (req, res) => {
+  const sql = `
+  INSERT INTO sritys
+  (title, photo, sav_id)
+  VALUES (?, ?, ?)
+  `;
+  con.query(sql, [req.body.title, req.body.photo, req.body.sav], (err, result) => {
+      if (err) throw err;
+      res.send({ result, msg: { text: "Pridėta nauja sritis!", type: "success" } });
+  });
+});
 
 //BACK SAVIVALDYBĖ
 app.get("/admin/savivaldybes", (req, res) => {
@@ -78,3 +87,7 @@ app.put("/admin/savivaldybes/:id", (req, res) => {
       res.send({ result, msg: { text: 'Savivaldybė redaguota', type: 'success' } });
   });
 });
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})

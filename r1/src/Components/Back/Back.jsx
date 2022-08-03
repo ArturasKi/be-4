@@ -18,6 +18,9 @@ function Back({show}) {
     const [editSav, setEditSav] = useState(null);
     const [modalSav, setModalSav] = useState(null);
 
+    const [sritys, setSritys] = useState(null);
+    const [createSritis, setCreateSritis] = useState(null);
+
   // READ SAV => useEffect viduje paduodama funkcija, kuri kreipiasi (GET) į serverį ir paima informaciją iš atitinkamo URL;
   useEffect(() => {
     axios
@@ -39,6 +42,20 @@ function Back({show}) {
         showMessage({ text: error.message, type: "success" });
       });
   }, [createSav]);
+
+      // CREATE SRITIS => useEffect viduje paduodama funkcija, kuri kreipiasi (POST) į serverį ir siunčia į jį createSav informaciją;
+    useEffect(() => {
+      if (null === createSritis) return;
+      axios
+        .post("http://localhost:3003/admin/sritys", createSritis)
+        .then((res) => {
+          showMessage(res.data.msg);
+          setLastUpdate(Date.now()); // irasymas, update;
+        })
+        .catch((error) => {
+          showMessage({ text: error.message, type: "success" });
+        });
+    }, [createSritis]);
 
    // DELETE SAV => useEffect viduje paduodama funkcija, kuri kreipiasi (DELETE) į serverį paduodama elemento id, kurį nori ištrinti;
   useEffect(() => {
@@ -86,7 +103,8 @@ function Back({show}) {
             messages,
             setEditSav,
             modalSav,
-            setModalSav
+            setModalSav,
+            setCreateSritis
         }}>
             {
                 show === 'admin' ? 

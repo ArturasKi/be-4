@@ -1,10 +1,20 @@
 import Nav from "../Nav";
+import CreateSritis from '../Sritys/Create';
 
 function Crud() {
     return (
         <>
             <Nav />
-            <h1>Sritys</h1>
+            <div className="container">
+                <div className="row">
+                    <div className="col-4">
+                        <CreateSritis />
+                    </div>
+                    <div className="col-8">
+                        
+                    </div>
+                </div>
+            </div>
         </>
     )
 }
