@@ -9,9 +9,18 @@ function Back({show}) {
 
     const [lastUpdate, setLastUpdate] = useState(Date.now());
 
+    const [savivaldybes, setSavivaldybes] = useState(null); 
     const [createSav, setCreateSav] = useState(null);
 
-    // CREATE SAV => useEffect kreipiasi į serverį ir siunčia į jį createSav informaciją;
+  // READ SAV => useEffect viduje paduodama funkcija, kuri kreipiasi (GET) į serverį ir paima informaciją iš atitinkamo URL;
+  useEffect(() => {
+    axios
+      .get("http://localhost:3003/admin/savivaldybes")
+      .then((res) => setSavivaldybes(res.data));
+  }, [lastUpdate]);
+
+    // CREATE SAV => useEffect viduje paduodama funkcija, kuri kreipiasi (POST) į serverį ir siunčia į jį createSav informaciją;
+    // URL - adresas kurio pagalba naršyklė gali pasiekti resursą internete. 
   useEffect(() => {
     if (null === createSav) return;
     axios
@@ -36,7 +45,8 @@ function Back({show}) {
 
     return (
         <BackContext.Provider value={{
-            setCreateSav
+            setCreateSav,
+            savivaldybes
         }}>
             {
                 show === 'admin' ? 

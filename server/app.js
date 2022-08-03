@@ -38,3 +38,16 @@ app.post("/admin/savivaldybes", (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+//BACK SAV
+app.get("/admin/savivaldybes", (req, res) => {
+  const sql = `
+SELECT *
+FROM savivaldybes
+ORDER BY title
+`;
+  con.query(sql, (err, result) => {
+      if (err) throw err;
+      res.send(result);
+  });
+});
