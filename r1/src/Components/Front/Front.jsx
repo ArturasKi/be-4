@@ -10,7 +10,8 @@ function Front({show}) {
 
     const [sritys, setSritys] = useState(null);
     const [savivaldybes, setSavivaldybes] = useState(null);
-    const [filter, setFilter] = useState(0); // value='0'
+    const [addCom, setAddCom] = useState(null);
+    // const [filter, setFilter] = useState(0); // value='0'
 
     // const [sritis, setEditSritis] = useState(0);
     
@@ -28,20 +29,30 @@ function Front({show}) {
         .then((res) => setSritys(res.data));
     }, []);
 
-
-
+    // CREATE COMMENT
+    useEffect(() => {
+    if (null === addCom) return;
+    axios
+      .post("http://localhost:3003/komentarai", addCom)
+      .then((res) => {
+        setLastUpdate(Date.now()); // irasymas, update;
+      })
+  }, [addCom]);
 
     return (
         <FrontContext.Provider value={{
             savivaldybes,
             sritys,
-            setSritys
+            setSritys,
+            setAddCom
         }}>
             {
                 show === 'front' ? 
                     <>
                         <Nav />
-                        <h1>WHALE HELLO THERE!</h1>
+                        <div className="hello">
+                            <h1><i>SVEIKI, PRISIJUNGĘ!</i></h1>
+                        </div>
                     </> : 
                 show === 'pateikti' ? 
                     <>

@@ -12,20 +12,14 @@ function Line({line}) {
     const [com, setCom] = useState('');
 
     const addComment = () => {
-        setAddCom({product_id: line.id, com});
-        setCom('');
+        console.log(line.id);
+        // setAddCom({sav_id: line.id, com});
+        // setCom('');
     }
 
     return (
         <li className="list-group-item">
             <div className="item front">
-                <div className="content">
-                    {/* <b>{line.title}</b> */}
-                    
-                    {/* {
-                        line.photo ? <div className="photo-bin"><img src={line.photo} alt='nice'/></div> : null
-                    } */}
-                </div>
                 <div className="form-group">
                     <label>Savivaldybė</label>
                     <select

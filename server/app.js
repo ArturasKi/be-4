@@ -155,3 +155,16 @@ ORDER BY title
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+//FRONT CREATE KOMENTARAS
+app.post("/komentarai", (req, res) => {
+  const sql = `
+  INSERT INTO komentarai
+  (com, sav_id, sr_id)
+  VALUES (?, ?, ?)
+  `;
+  con.query(sql, [req.body.com, req.body.sav_id, req.body.sr], (err, result) => {
+      if (err) throw err;
+      res.send({ result });
+  });
+});
